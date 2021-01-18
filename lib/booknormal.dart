@@ -1,5 +1,6 @@
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -37,9 +38,15 @@ class _BookNormalState extends State<BookNormal> {
     }
   }
 
+  Future<void> secureScreen() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+
   @override
   void initState() {
     super.initState();
+    secureScreen();
+
     print("Buku_id " + widget.buku_id);
     sendReader(widget.buku_id);
     loadDocument();

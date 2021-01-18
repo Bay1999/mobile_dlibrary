@@ -13,6 +13,7 @@ import 'dart:convert';
 class Detailbook extends StatefulWidget {
   final int id;
   final String judul;
+  final String penulis;
   final String desc;
   final String cover;
   final List<dynamic> bab;
@@ -22,6 +23,7 @@ class Detailbook extends StatefulWidget {
     Key key,
     @required this.id,
     this.judul,
+    this.penulis,
     this.desc,
     this.cover,
     this.bab,
@@ -128,12 +130,15 @@ class _DetailbookState extends State<Detailbook> {
 
   _cekUsername() async {
     SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    if (myPrefs.getString('username') != null) {
+    if (myPrefs.getString('username') != null &&
+        myPrefs.getString('username') != '') {
       user = true;
+      setState(() {
+        username = myPrefs.getString('username');
+        print(username);
+      });
       getReview(widget.id, myPrefs.getString('username')).then((value) {
         setState(() {
-          username = myPrefs.getString('username');
-          print(username);
           review = value;
           print("rate = " + review.rate.toString());
           if (review != null) {
@@ -267,10 +272,18 @@ class _DetailbookState extends State<Detailbook> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.fromLTRB(30, 30, 30, 30),
+                        margin: EdgeInsets.fromLTRB(30, 30, 30, 10),
                         child: Text(
                           "Pembaca : " + reader.toString(),
                           textAlign: TextAlign.justify,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10, 10, 10, 30),
+                        child: Text(
+                          "Penulis : " + widget.penulis,
+                          textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
@@ -377,7 +390,7 @@ class _DetailbookState extends State<Detailbook> {
                                 textAlign: TextAlign.center),
                           ),
                         ),
-                      if (user)
+                      if (user && user != '')
                         Column(
                           children: <Widget>[
                             Container(
@@ -398,7 +411,7 @@ class _DetailbookState extends State<Detailbook> {
                             ),
                           ],
                         ),
-                      if (user)
+                      if (user && user != '')
                         Container(
                           // color: Colors.red,
                           margin: EdgeInsets.fromLTRB(40, 10, 40, 30),
@@ -422,7 +435,7 @@ class _DetailbookState extends State<Detailbook> {
                             },
                           ),
                         ),
-                      if (user)
+                      if (user && user != '')
                         Container(
                           margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
                           child: TextFormField(
@@ -569,10 +582,17 @@ class _DetailbookState extends State<Detailbook> {
                               );
                             } else if (reviewAll.hasError) {
                               // return Text("${kategori.error}");
-                              print(reviewAll.error);
+                              // print(reviewAll.error);
                               return Container(
                                 margin: EdgeInsetsDirectional.only(bottom: 30),
-                                child: Center(child: Text("Belum Ada Ulasan")),
+                                child: Center(child: Text('Belum ada ulasan')),
+                              );
+                            } else if (!reviewAll.hasData) {
+                              // return Text("${kategori.error}");
+                              // print(reviewAll.error);
+                              return Container(
+                                margin: EdgeInsetsDirectional.only(bottom: 30),
+                                child: Center(child: Text('Belum ada ulasan')),
                               );
                             }
                             return Center(

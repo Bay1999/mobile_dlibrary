@@ -20,6 +20,7 @@ class Buku {
   final int id;
   final String kategori_id;
   final String nama;
+  final String penulis;
   final String deskripsi;
   final String cover;
   final String bab;
@@ -29,6 +30,7 @@ class Buku {
     this.id,
     this.kategori_id,
     this.nama,
+    this.penulis,
     this.deskripsi,
     this.cover,
     this.bab,
@@ -40,6 +42,7 @@ class Buku {
       id: json['id'],
       kategori_id: json['kategori_id'],
       nama: json['nama'],
+      penulis: json['penulis'],
       deskripsi: json['deskripsi'],
       cover: json['cover'],
       bab: json['bab'],
@@ -64,7 +67,7 @@ class Review {
       idBuku: object['buku_id'],
       user: object['user'],
       commentar: object['commentar'],
-      rate: object['rate'] != null ? object['rate'] : object['rate'],
+      rate: object['rate'] != null ? object['rate'].toDouble() : 1.0,
     );
   }
 }

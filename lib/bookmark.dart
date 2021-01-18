@@ -86,6 +86,7 @@ class _BookmarkState extends State<Bookmark> {
                                       desc: buku.data[0].deskripsi,
                                       cover: buku.data[0].cover,
                                       bab: json.decode(buku.data[0].bab),
+                                      penulis: buku.data[0].penulis,
                                     )),
                           );
                         });

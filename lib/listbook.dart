@@ -70,6 +70,7 @@ class _ListbookState extends State<Listbook> {
                                   builder: (context) => Detailbook(
                                         id: buku.data[i].id,
                                         judul: buku.data[i].nama,
+                                        penulis: buku.data[i].penulis,
                                         desc: buku.data[i].deskripsi,
                                         cover: buku.data[i].cover,
                                         bab: json.decode(buku.data[i].bab),
