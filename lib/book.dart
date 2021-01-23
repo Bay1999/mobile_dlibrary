@@ -75,6 +75,7 @@ class _AlicePageState extends State<AlicePage> {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
+  // ini init
   @override
   void initState() {
     secureScreen();
